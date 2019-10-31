@@ -1,28 +1,107 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="fullBody">
+
+  <md-card >
+      <md-card-header class="titleBar">
+        <h1>To Do List</h1> 
+        <br>
+        <h3>Enter Task Below</h3>
+      </md-card-header>
+  </md-card>
+      <md-card>
+           
+           <md-field>
+            <md-input v-model='currentTodo' @keydown.enter='addTodo(todo)' placeholder='Add a todo'></md-input>
+         </md-field>
+         
+              <md-list class="todos">
+                <md-list-item v-for='(todo, index) in todos' :key='todo.id'>
+                  <input class='checkBtn' type='checkbox' v-model='todo.completed' >
+                    
+                      <span class="todo-item-label" :class='{completed: todo.completed}' @dblclick='editTodo(todo)' v-if="!todo.edit">
+                          {{todo.label}}
+                      </span> 
+                    
+                        <input v-else class="todo-item-edit" type="text" v-model='todo.label' @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)" @keyup.escape="doneEdit(todo)"> 
+                       
+                  <md-button class="removeBtn md-raised md-primary" @click="removeTodo(index)">Remove</md-button>
+                  </md-list-item>
+                  </md-list>
+                
+      </md-card>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      todos: [],
+      currentTodo: ' ',
+      editedTodo: null
+    }
+  },
+  methods: {
+      addTodo() {
+
+        if (this.currentTodo.trim() == 0) {
+          return
+        }
+        this.todos.push({
+          id:this.todos.length, 
+          label: this.currentTodo, 
+          completed: false, 
+          edit: false
+        });
+        this.currentTodo = ' ';
+      },
+      removeTodo(index) {
+        this.todos.splice(index,1)
+      },
+      editTodo(todo) {
+        todo.edit = true
+      },
+      doneEdit(todo) {
+        todo.edit = false
+      }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.titleBar{
+  background-color:navy;
+  color:white;
+  font-variant:small-caps;
 }
+.todos{
+  font-variant:small-caps;
+}
+
+.fullBody{
+  width:40%;
+  margin:auto;
+  margin-top:15px;
+  text-align:center;
+  border:2px solid grey;
+  padding:15px;
+  border-radius:5px;
+  
+ 
+}
+
+.checkBtn{
+  float:left;
+}
+.removeBtn{
+  float:right;
+  font-variant:small-caps;
+}
+.completed{
+  color:red;
+}
+
+
+
 </style>
