@@ -3,7 +3,7 @@
 
   <md-card >
       <md-card-header class="titleBar">
-        <h1>To Do List</h1> 
+        <h1>Organize Your Objectives!</h1> 
         <br>
         <h3>Enter Task Below</h3>
       </md-card-header>
@@ -11,7 +11,7 @@
       <md-card>
            
            <md-field>
-            <md-input v-model='currentTodo' @keydown.enter='addTodo(todo)' placeholder='Add a todo'></md-input>
+            <md-input v-model='currentTodo' @keydown.enter='addTodo()' placeholder="Add A To Do"></md-input>
          </md-field>
          
               <md-list class="todos">
@@ -71,7 +71,7 @@ export default {
 
 <style>
 .titleBar{
-  background-color:navy;
+  background-color:rgb(77, 0, 153);
   color:white;
   font-variant:small-caps;
 }
@@ -81,12 +81,14 @@ export default {
 
 .fullBody{
   width:40%;
+  height:120%;
   margin:auto;
   margin-top:15px;
   text-align:center;
   border:2px solid grey;
   padding:15px;
   border-radius:5px;
+   background-image: linear-gradient(70deg,rgb(204, 153, 255),white)
   
  
 }
